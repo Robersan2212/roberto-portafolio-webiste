@@ -11,7 +11,7 @@ export default function Navbar() {
     <nav className="fixed top-0 z-50 w-full px-4 pt-6 sm:px-6 lg:px-8">
       <div className="mx-auto flex max-w-fit items-center justify-between gap-12 rounded-full border border-white/20 bg-white/5 px-6 py-3 backdrop-blur-xl">
         {/* Brand/Logo */}
-        <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
+        <Link href="/" className="flex items-center gap-2 transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-blue-500">
             <span className="text-lg font-bold text-white">R</span>
           </div>
