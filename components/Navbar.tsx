@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Github, Linkedin, FileText } from "lucide-react";
+import { Menu, Github, Linkedin, FileText } from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,47 +55,56 @@ export default function Navbar() {
           className="text-white/90 transition-colors hover:text-white md:hidden"
           aria-label="Toggle menu"
         >
-          {isOpen ? <X size={20} /> : <Menu size={20} />}
+          <Menu
+            size={20}
+            className={`transition-transform duration-200 ease-out ${
+              isOpen ? "rotate-90" : "rotate-0"
+            }`}
+          />
         </button>
       </div>
 
       {/* Mobile Navigation */}
-      {isOpen && (
-        <div className="mt-4 rounded-3xl border border-white/20 bg-white/5 px-6 py-4 backdrop-blur-xl md:hidden">
-          <div className="flex flex-col gap-4">
-            <Link
-              href="https://github.com/yourusername"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2 text-sm font-medium text-white/90 transition-colors hover:text-white"
-            >
-              <Github size={18} />
-              <span>GitHub</span>
-            </Link>
-            <Link
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2 text-sm font-medium text-white/90 transition-colors hover:text-white"
-            >
-              <FileText size={18} />
-              <span>Resume</span>
-            </Link>
-            <Link
-              href="https://linkedin.com/in/yourusername"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2 text-sm font-medium text-white/90 transition-colors hover:text-white"
-            >
-              <Linkedin size={18} />
-              <span>LinkedIn</span>
-            </Link>
-          </div>
+      <div
+        className={`relative z-50 mt-4 rounded-3xl border border-white/20 bg-white/5 backdrop-blur-xl transition-all duration-200 ease-out md:hidden ${
+          isOpen
+            ? "max-h-60 opacity-100 visible translate-y-0"
+            : "max-h-0 opacity-0 invisible -translate-y-2 border-transparent"
+        }`}
+      >
+        <div className="flex flex-col gap-4 px-6 py-4">
+          <Link
+            href="https://github.com/yourusername"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-2 text-sm font-medium text-white/90 transition-colors hover:text-white"
+          >
+            <Github size={18} />
+            <span>GitHub</span>
+          </Link>
+          <Link
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-2 text-sm font-medium text-white/90 transition-colors hover:text-white"
+          >
+            <FileText size={18} />
+            <span>Resume</span>
+          </Link>
+          <Link
+            href="https://linkedin.com/in/yourusername"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-2 text-sm font-medium text-white/90 transition-colors hover:text-white"
+          >
+            <Linkedin size={18} />
+            <span>LinkedIn</span>
+          </Link>
         </div>
-      )}
+      </div>
     </nav>
   );
 }

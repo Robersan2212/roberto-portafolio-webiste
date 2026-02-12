@@ -4,6 +4,7 @@ import AnimatedContent from "@/components/AnimatedContent";
 import DarkVeil from "@/components/DarkVeil";
 import HeroText from "@/components/HeroText";
 import LogoLoop from "@/components/LogoLoop";
+import Navbar from "@/components/Navbar";
 
 import portrait from "./assets/Roberto Sanchez.webp";
 
@@ -64,6 +65,7 @@ export default function Home() {
       <div className="fixed inset-0 -z-10 bg-zinc-950">
         <DarkVeil speed={0.5} />
       </div>
+      <Navbar />
       <main className="flex min-h-dvh w-full flex-col items-center justify-center gap-6 px-4 py-8 sm:min-h-screen sm:gap-8 sm:px-6 md:gap-10 md:px-8 lg:-translate-y-8 lg:gap-12 lg:px-12 xl:-translate-y-12">
         <AnimatedContent
           direction="vertical"
@@ -108,7 +110,15 @@ export default function Home() {
             Contact Me
           </Button>
         </div>
-        <div className="w-full max-w-4xl">
+        <AnimatedContent
+          distance={0}
+          duration={0.8}
+          delay={2.5}
+          initialOpacity={0}
+          animateOpacity={true}
+          triggerOnMount
+          className="w-full max-w-4xl"
+        >
           <LogoLoop
             logos={techLogos}
             speed={40}
@@ -119,7 +129,7 @@ export default function Home() {
             gap={48}
             className="text-white/60"
           />
-        </div>
+        </AnimatedContent>
       </main>
     </div>
   );
