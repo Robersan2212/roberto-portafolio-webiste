@@ -56,15 +56,15 @@ export default function ShinyHeroText({
   };
 
   return (
-    <div className="flex flex-col items-center gap-1.5 text-center sm:gap-2">
+    <div className="flex min-w-0 max-w-full flex-col items-center gap-1.5 text-center sm:gap-2">
       <motion.h1
-        className={`font-sans font-bold tracking-tight ${line1ClassName}`}
+        className={`break-words font-sans font-bold tracking-tight ${line1ClassName}`}
         style={{ ...gradientStyle, backgroundPosition }}
       >
         {line1}
       </motion.h1>
       <motion.p
-        className={`font-sans font-medium ${line2ClassName}`}
+        className={`break-words font-sans font-medium ${line2ClassName}`}
         style={{ ...gradientStyle, backgroundPosition }}
       >
         {line2}

@@ -61,12 +61,12 @@ const techLogos = [
 
 export default function Home() {
   return (
-    <div className="relative min-h-dvh w-full sm:min-h-screen">
+    <div className="relative min-h-dvh w-full overflow-x-hidden sm:min-h-screen">
       <div className="fixed inset-0 -z-10 bg-zinc-950">
         <DarkVeil speed={0.5} />
       </div>
       <Navbar />
-      <main className="flex min-h-dvh w-full flex-col items-center justify-center gap-6 px-4 py-8 sm:min-h-screen sm:gap-8 sm:px-6 md:gap-10 md:px-8 lg:-translate-y-8 lg:gap-12 lg:px-12 xl:-translate-y-12">
+      <main className="flex min-h-dvh w-full min-w-0 flex-col items-center justify-center gap-4 px-3 pt-24 pb-6 [padding-bottom:max(1.5rem,env(safe-area-inset-bottom))] sm:min-h-screen sm:gap-8 sm:px-6 sm:py-8 sm:pt-28 md:gap-10 md:px-8 lg:-translate-y-8 lg:gap-12 lg:px-12 xl:-translate-y-12 2xl:px-16">
         <AnimatedContent
           direction="vertical"
           reverse={false}
@@ -75,37 +75,37 @@ export default function Home() {
           delay={1.8}
           initialOpacity={0}
           triggerOnMount
-          className="relative aspect-square h-36 w-36 shrink-0 overflow-hidden rounded-3xl ring-2 ring-white/20 sm:h-40 sm:w-40 md:h-44 md:w-44 lg:h-56 lg:w-56 xl:h-64 xl:w-64"
+          className="relative aspect-square h-28 w-28 shrink-0 overflow-hidden rounded-2xl ring-2 ring-white/20 min-[400px]:h-32 min-[400px]:w-32 sm:h-40 sm:w-40 sm:rounded-3xl md:h-44 md:w-44 lg:h-56 lg:w-56 xl:h-64 xl:w-64"
         >
           <Image
             src={portrait}
             alt="Roberto Sanchez"
             fill
             className="object-cover object-[center_10%]"
-            sizes="(max-width: 640px) 144px, (max-width: 768px) 160px, (max-width: 1024px) 176px, (max-width: 1280px) 224px, 256px"
+            sizes="(max-width: 400px) 112px, (max-width: 640px) 128px, (max-width: 768px) 160px, (max-width: 1024px) 176px, (max-width: 1280px) 224px, 256px"
             priority
           />
         </AnimatedContent>
         <HeroText />
-        <div className="flex w-full max-w-2xl flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-4">
+        <div className="flex w-full max-w-2xl min-w-0 flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-4">
           <Button
             variant="outline"
             size="lg"
-            className="h-12 w-full cursor-pointer rounded-full border-white/20 bg-white/5 px-8 font-sans text-sm font-medium text-white/90 backdrop-blur-xl transition-all duration-300 ease-in-out hover:bg-white/80 hover:text-zinc-900 sm:w-auto sm:text-base"
+            className="h-11 min-h-11 w-full cursor-pointer rounded-full border-white/20 bg-white/5 px-6 font-sans text-sm font-medium text-white/90 backdrop-blur-xl transition-all duration-300 ease-in-out hover:bg-white/80 hover:text-zinc-900 sm:h-12 sm:w-auto sm:px-8 sm:text-base"
           >
             About Me
           </Button>
           <Button
             variant="outline"
             size="lg"
-            className="h-12 w-full cursor-pointer rounded-full border-white/20 bg-white/5 px-8 font-sans text-sm font-medium text-white/90 backdrop-blur-xl transition-all duration-300 ease-in-out hover:bg-white/80 hover:text-zinc-900 sm:w-auto sm:text-base"
+            className="h-11 min-h-11 w-full cursor-pointer rounded-full border-white/20 bg-white/5 px-6 font-sans text-sm font-medium text-white/90 backdrop-blur-xl transition-all duration-300 ease-in-out hover:bg-white/80 hover:text-zinc-900 sm:h-12 sm:w-auto sm:px-8 sm:text-base"
           >
             Projects
           </Button>
           <Button
             variant="outline"
             size="lg"
-            className="h-12 w-full cursor-pointer rounded-full border-white/20 bg-white/5 px-8 font-sans text-sm font-medium text-white/90 backdrop-blur-xl transition-all duration-300 ease-in-out hover:bg-white/80 hover:text-zinc-900 sm:w-auto sm:text-base"
+            className="h-11 min-h-11 w-full cursor-pointer rounded-full border-white/20 bg-white/5 px-6 font-sans text-sm font-medium text-white/90 backdrop-blur-xl transition-all duration-300 ease-in-out hover:bg-white/80 hover:text-zinc-900 sm:h-12 sm:w-auto sm:px-8 sm:text-base"
           >
             Contact Me
           </Button>
@@ -117,7 +117,7 @@ export default function Home() {
           initialOpacity={0}
           animateOpacity={true}
           triggerOnMount
-          className="w-full max-w-4xl"
+          className="w-full min-w-0 max-w-4xl overflow-hidden px-1"
         >
           <LogoLoop
             logos={techLogos}

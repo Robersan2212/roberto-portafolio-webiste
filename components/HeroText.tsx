@@ -20,21 +20,21 @@ export default function HeroText() {
       <ShinyHeroText
         line1="Roberto Sanchez"
         line2="Software Engineer"
-        line1ClassName="text-lg font-semibold text-zinc-400 sm:text-xl md:text-2xl lg:text-3xl"
-        line2ClassName="text-3xl font-bold text-zinc-400 sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
+        line1ClassName="text-base font-semibold text-zinc-400 min-[400px]:text-lg sm:text-xl md:text-2xl lg:text-3xl"
+        line2ClassName="text-2xl font-bold text-zinc-400 min-[400px]:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
       />
     );
   }
 
   return (
-    <div className="flex flex-col items-center gap-1.5 text-center font-sans sm:gap-2">
+    <div className="flex min-w-0 max-w-full flex-col items-center gap-1.5 text-center font-sans sm:gap-2">
       <TextType
         text="Roberto Sanchez"
         as="h1"
         loop={false}
         typingSpeed={60}
         showCursor={false}
-        className="font-sans text-lg font-semibold text-zinc-400 sm:text-xl md:text-2xl lg:text-3xl"
+        className="font-sans text-base font-semibold text-zinc-400 min-[400px]:text-lg sm:text-xl md:text-2xl lg:text-3xl"
       />
       <TextType
         text="Software Engineer"
@@ -43,7 +43,7 @@ export default function HeroText() {
         typingSpeed={50}
         initialDelay={900}
         showCursor={false}
-        className="font-sans text-3xl font-bold text-zinc-400 sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
+        className="font-sans text-2xl font-bold text-zinc-400 min-[400px]:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
       />
     </div>
   );

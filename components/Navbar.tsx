@@ -8,14 +8,14 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 z-50 w-full px-4 pt-6 sm:px-6 lg:px-8">
-      <div className="mx-auto flex max-w-fit items-center justify-between gap-12 rounded-full border border-white/20 bg-white/5 px-6 py-3 backdrop-blur-xl">
+    <nav className="fixed top-0 left-0 right-0 z-50 w-full px-3 pt-4 pb-2 sm:px-6 sm:pt-6 lg:px-8 lg:pt-6 [padding-top:max(1rem,env(safe-area-inset-top))]">
+      <div className="mx-auto flex w-full max-w-full min-w-0 items-center justify-between gap-4 overflow-hidden rounded-full border border-white/20 bg-white/5 px-4 py-2.5 backdrop-blur-xl sm:max-w-fit sm:gap-12 sm:px-6 sm:py-3 sm:overflow-visible">
         {/* Brand/Logo */}
-        <Link href="/" className="flex items-center gap-2 transition-transform duration-200 hover:scale-105 active:scale-95 focus:outline-none">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-blue-500">
-            <span className="text-lg font-bold text-white">R</span>
+        <Link href="/" className="flex min-w-0 shrink-0 items-center gap-2 focus:outline-none">
+          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 sm:h-8 sm:w-8">
+            <span className="text-base font-bold text-white sm:text-lg">R</span>
           </div>
-          <span className="text-sm font-semibold text-white">Roberto Sanchez</span>
+          <span className="truncate text-xs font-semibold text-white sm:text-sm">Roberto Sanchez</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -66,7 +66,7 @@ export default function Navbar() {
 
       {/* Mobile Navigation */}
       <div
-        className={`relative z-50 mt-4 rounded-3xl border border-white/20 bg-white/5 backdrop-blur-xl transition-all duration-200 ease-out md:hidden ${
+        className={`relative z-50 mx-3 mt-3 rounded-3xl border border-white/20 bg-white/5 backdrop-blur-xl transition-all duration-200 ease-out md:hidden sm:mx-0 ${
           isOpen
             ? "max-h-60 opacity-100 visible translate-y-0"
             : "max-h-0 opacity-0 invisible -translate-y-2 border-transparent"
