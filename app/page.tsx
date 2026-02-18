@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import AnimatedContent from "@/components/AnimatedContent";
 import DarkVeil from "@/components/DarkVeil";
@@ -89,11 +90,12 @@ export default function Home() {
         <HeroText />
         <div className="flex w-full max-w-2xl min-w-0 flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-4">
           <Button
+            asChild
             variant="outline"
             size="lg"
             className="h-11 min-h-11 w-full cursor-pointer rounded-full border-white/20 bg-white/5 px-6 font-sans text-sm font-medium text-white/90 backdrop-blur-xl transition-all duration-300 ease-in-out hover:bg-white/80 hover:text-zinc-900 sm:h-12 sm:w-auto sm:px-8 sm:text-base"
           >
-            About Me
+            <Link href="/about">About Me</Link>
           </Button>
           <Button
             variant="outline"

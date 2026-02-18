@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, Github, Linkedin, FileText } from "lucide-react";
+import { Menu, Github, Linkedin, FileText, Home } from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +11,7 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 w-full px-3 pt-4 pb-2 sm:px-6 sm:pt-6 lg:px-8 lg:pt-6 [padding-top:max(1rem,env(safe-area-inset-top))]">
       <div className="mx-auto flex w-full max-w-full min-w-0 items-center justify-between gap-4 overflow-hidden rounded-full border border-white/20 bg-white/5 px-4 py-2.5 backdrop-blur-xl sm:max-w-fit sm:gap-12 sm:px-6 sm:py-3 sm:overflow-visible">
         {/* Brand/Logo */}
-        <Link href="/" className="flex min-w-0 shrink-0 items-center gap-2 focus:outline-none">
+        <Link href="/about" className="flex min-w-0 shrink-0 items-center gap-2 focus:outline-none">
           <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 sm:h-8 sm:w-8">
             <span className="text-base font-bold text-white sm:text-lg">R</span>
           </div>
@@ -20,6 +20,13 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-6 md:flex">
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-sm font-medium text-white/90 transition-colors hover:text-white"
+          >
+            <Home size={18} />
+            <span>Home</span>
+          </Link>
           <Link
             href="https://github.com/yourusername"
             target="_blank"
@@ -73,6 +80,14 @@ export default function Navbar() {
         }`}
       >
         <div className="flex flex-col gap-4 px-6 py-4">
+          <Link
+            href="/"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-2 text-sm font-medium text-white/90 transition-colors hover:text-white"
+          >
+            <Home size={18} />
+            <span>Home</span>
+          </Link>
           <Link
             href="https://github.com/yourusername"
             target="_blank"
