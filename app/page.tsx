@@ -105,11 +105,12 @@ export default function Home() {
             Projects
           </Button>
           <Button
+            asChild
             variant="outline"
             size="lg"
             className="h-11 min-h-11 w-full cursor-pointer rounded-full border-white/20 bg-white/5 px-6 font-sans text-sm font-medium text-white/90 backdrop-blur-xl transition-all duration-300 ease-in-out hover:bg-white/80 hover:text-zinc-900 sm:h-12 sm:w-auto sm:px-8 sm:text-base"
           >
-            Contact Me
+            <Link href="/contact">Contact Me</Link>
           </Button>
         </div>
         <AnimatedContent

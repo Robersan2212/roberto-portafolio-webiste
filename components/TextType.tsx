@@ -20,6 +20,7 @@ interface TextTypeProps {
   textColors?: string[];
   variableSpeed?: { min: number; max: number };
   onSentenceComplete?: (sentence: string, index: number) => void;
+  onComplete?: () => void;
   startOnVisible?: boolean;
   reverseMode?: boolean;
 }
@@ -41,6 +42,7 @@ const TextType = ({
   textColors = [],
   variableSpeed,
   onSentenceComplete,
+  onComplete,
   startOnVisible = false,
   reverseMode = false,
   ...props
@@ -135,7 +137,10 @@ const TextType = ({
             variableSpeed ? getRandomSpeed() : typingSpeed
           );
         } else if (textArray.length >= 1) {
-          if (!loop && currentTextIndex === textArray.length - 1) return;
+          if (!loop && currentTextIndex === textArray.length - 1) {
+            onComplete?.();
+            return;
+          }
           timeout = setTimeout(() => {
             setIsDeleting(true);
           }, pauseDuration);
@@ -164,7 +169,8 @@ const TextType = ({
     isVisible,
     reverseMode,
     variableSpeed,
-    onSentenceComplete
+    onSentenceComplete,
+    onComplete
   ]);
 
   const shouldHideCursor =
