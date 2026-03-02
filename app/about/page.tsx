@@ -96,6 +96,16 @@ export default function AboutPage() {
                   </li>
                 </ul>
               </div>
+              <div className="space-y-2">
+                <h2 className="font-sans text-lg font-semibold text-zinc-300 sm:text-xl">
+                  Key Contacts
+                </h2>
+                <ul className="space-y-1 font-sans text-base text-zinc-400 sm:text-lg">
+                  <li>Mike Miller | Application Systems Engineer (millermike@byui.edu)</li>
+                  <li>Ron Vallejo | AI Engineer — (208) 496-9002</li>
+                  <li>Mary Jo Huntsman | IT Service Desk Manager — (208) 496-7023</li>
+                </ul>
+              </div>
               </FadeContent>
             </div>
           </div>

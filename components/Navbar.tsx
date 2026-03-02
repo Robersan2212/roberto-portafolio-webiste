@@ -10,17 +10,19 @@ export default function Navbar() {
   const pathname = usePathname();
   const isAboutPage = pathname === "/about";
 
+  const resumeUrl = process.env.NEXT_PUBLIC_RESUME_URL || "https://rrauhkb8ouyrqm99.public.blob.vercel-storage.com/Roberto%20Resume.pdf";
+
   const navLinks = isAboutPage
     ? [
         { href: "/", label: "Home", icon: Home },
         { href: "/projects", label: "Projects", icon: FolderKanban },
-        { href: "/resume.pdf", label: "Resume", icon: FileText, external: true },
+        { href: resumeUrl, label: "Resume", icon: FileText, external: true },
         { href: "/contact", label: "Contact Me", icon: Mail },
       ]
     : [
         { href: "/", label: "Home", icon: Home },
         { href: "https://github.com/Robersan2212", label: "GitHub", icon: Github, external: true },
-        { href: "/resume.pdf", label: "Resume", icon: FileText, external: true },
+        { href: resumeUrl, label: "Resume", icon: FileText, external: true },
         { href: "https://www.linkedin.com/in/roberto-sanchez-6b0955209", label: "LinkedIn", icon: Linkedin, external: true },
       ];
 
