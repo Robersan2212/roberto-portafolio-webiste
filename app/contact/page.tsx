@@ -133,10 +133,10 @@ export default function ContactPage() {
                 <CheckCircle2 className="size-12 text-green-400" aria-hidden />
                 <div className="space-y-2">
                   <p className="font-sans text-lg font-semibold text-green-300">
-                    Message successfully delivered
+                    Message successfully submitted
                   </p>
                   <p className="font-sans text-base text-zinc-400">
-                    Thanks for reaching out! I&apos;ll get back to you soon.
+                    Thanks for your message! I&apos;ll get back to you soon.
                   </p>
                 </div>
               </div>
