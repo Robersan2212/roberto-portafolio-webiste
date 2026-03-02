@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import { useForm, ValidationError } from "@formspree/react";
 import AboutPageLayout from "@/components/AboutPageLayout";
 import { Button } from "@/components/ui/button";
 import {
@@ -62,6 +63,7 @@ function AutoResizeTextarea({
 const EMAIL = "san20086@byui.edu";
 
 export default function ContactPage() {
+  const [state, handleSubmit] = useForm("xwvnjgpq");
   const [copied, setCopied] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
 
@@ -125,50 +127,76 @@ export default function ContactPage() {
             </div>
           </CardHeader>
           <CardContent>
-            <form className="grid w-full gap-6">
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="fullName" className="text-zinc-300">
-                  Full Name
-                </Label>
-                <Input
-                  id="fullName"
-                  name="fullName"
-                  placeholder="Your full name"
-                  className="min-w-0 overflow-x-auto border-white/20 bg-white/5 text-zinc-300 placeholder:text-zinc-500"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="company" className="text-zinc-300">
-                  Company Name
-                </Label>
-                <Input
-                  id="company"
-                  name="company"
-                  placeholder="Your company name"
-                  className="border-white/20 bg-white/5 text-zinc-300 placeholder:text-zinc-500"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="message" className="text-zinc-300">
-                  Message
-                </Label>
-                <AutoResizeTextarea
-                  id="message"
-                  name="message"
-                  placeholder="Your message..."
-                  rows={10}
-                  className="min-w-0 max-w-full break-words border-white/20 bg-white/5 text-zinc-300 placeholder:text-zinc-500"
-                />
-              </div>
-              <div className="pt-2">
-                <Button
-                  type="submit"
-                  className="w-full bg-purple-600 text-white hover:bg-purple-700"
-                >
-                  Send
-                </Button>
-              </div>
-            </form>
+            {state.succeeded ? (
+              <p className="font-sans text-center text-lg text-zinc-300">
+                Thanks for your message! I&apos;ll get back to you soon.
+              </p>
+            ) : (
+              <form className="grid w-full gap-6" onSubmit={handleSubmit}>
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="fullName" className="text-zinc-300">
+                    Full Name
+                  </Label>
+                  <Input
+                    id="fullName"
+                    name="fullName"
+                    placeholder="Your full name"
+                    required
+                    className="min-w-0 overflow-x-auto border-white/20 bg-white/5 text-zinc-300 placeholder:text-zinc-500"
+                  />
+                  <ValidationError prefix="Full Name" field="fullName" errors={state.errors} className="text-sm text-red-400" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="email" className="text-zinc-300">
+                    Email Address
+                  </Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="Your email address"
+                    required
+                    className="border-white/20 bg-white/5 text-zinc-300 placeholder:text-zinc-500"
+                  />
+                  <ValidationError prefix="Email" field="email" errors={state.errors} className="text-sm text-red-400" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="company" className="text-zinc-300">
+                    Company Name
+                  </Label>
+                  <Input
+                    id="company"
+                    name="company"
+                    placeholder="Your company name"
+                    className="border-white/20 bg-white/5 text-zinc-300 placeholder:text-zinc-500"
+                  />
+                  <ValidationError prefix="Company" field="company" errors={state.errors} className="text-sm text-red-400" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Label htmlFor="message" className="text-zinc-300">
+                    Message
+                  </Label>
+                  <AutoResizeTextarea
+                    id="message"
+                    name="message"
+                    placeholder="Your message..."
+                    rows={10}
+                    required
+                    className="min-w-0 max-w-full break-words border-white/20 bg-white/5 text-zinc-300 placeholder:text-zinc-500"
+                  />
+                  <ValidationError prefix="Message" field="message" errors={state.errors} className="text-sm text-red-400" />
+                </div>
+                <div className="pt-2">
+                  <Button
+                    type="submit"
+                    disabled={state.submitting}
+                    className="w-full bg-purple-600 text-white hover:bg-purple-700 disabled:opacity-50"
+                  >
+                    {state.submitting ? "Sending..." : "Send"}
+                  </Button>
+                </div>
+              </form>
+            )}
           </CardContent>
         </Card>
       </main>
