@@ -145,47 +145,47 @@ export default function ProjectsPage() {
       >
         <DialogContent
           showCloseButton={false}
-          className="inset-0 h-dvh w-dvh max-h-none max-w-none translate-x-0 translate-y-0 rounded-none border-0 bg-zinc-950 p-0 data-[state=open]:!animate-slide-in-from-left data-[state=closed]:!animate-slide-out-to-left"
+          className="inset-0 flex h-dvh max-h-dvh w-dvh max-w-none translate-x-0 translate-y-0 flex-col overflow-hidden rounded-none border-0 bg-zinc-950 p-0 data-[state=open]:!animate-slide-in-from-left data-[state=closed]:!animate-slide-out-to-left [padding-left:env(safe-area-inset-left)] [padding-right:env(safe-area-inset-right)] [padding-bottom:env(safe-area-inset-bottom)]"
         >
           {selectedProject && (
-            <div className="flex h-full w-full flex-col overflow-auto">
-              <DialogHeader className="flex flex-row items-center justify-between gap-4 shrink-0 border-b border-white/20 px-6 py-4">
-                <DialogTitle className="font-sans text-xl font-semibold text-zinc-300 sm:text-2xl">
+            <div className="flex h-full max-h-dvh w-full min-w-0 flex-col overflow-hidden">
+              <DialogHeader className="flex shrink-0 flex-row items-center justify-between gap-3 border-b border-white/20 px-4 py-3 sm:gap-4 sm:px-6 sm:py-4">
+                <DialogTitle className="min-w-0 flex-1 truncate font-sans text-lg font-semibold text-zinc-300 sm:text-xl md:text-2xl">
                   {selectedProject.title}
                 </DialogTitle>
                 <DialogClose
-                  className="rounded p-2 text-zinc-400 transition-colors hover:bg-white/10 hover:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-white/30"
+                  className="shrink-0 rounded p-2 text-zinc-400 transition-colors hover:bg-white/10 hover:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-white/30"
                   aria-label="Close preview"
                 >
-                  <X size={24} />
+                  <X className="size-5 sm:size-6" />
                 </DialogClose>
               </DialogHeader>
-              <div className="flex flex-1 flex-col gap-6 overflow-auto p-6">
+              <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-y-auto overflow-x-hidden p-4 sm:gap-6 sm:p-6">
                 {selectedProject.image && (
-                  <div className="relative mx-auto w-full max-w-4xl">
-                    <div className="relative w-full rounded-lg">
+                  <div className="relative mx-auto w-full min-w-0 max-w-4xl">
+                    <div className="relative flex h-[min(45vh,400px)] w-full items-center justify-center overflow-hidden rounded-lg bg-zinc-900/30">
                       <Image
                         src={selectedProject.image}
                         alt={selectedProject.title}
                         width={typeof selectedProject.image === "string" ? 444 : selectedProject.image.width}
                         height={typeof selectedProject.image === "string" ? 120 : selectedProject.image.height}
-                        className={`w-full h-auto max-w-full object-contain ${selectedProject.imageClassName ?? ""}`}
-                        sizes="(max-width: 1024px) 100vw, 896px"
+                        className={`max-h-full w-auto max-w-full object-contain ${selectedProject.imageClassName ?? ""}`}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 896px"
                       />
                     </div>
                   </div>
                 )}
-                <p className="font-sans text-base text-zinc-400 sm:text-lg">
+                <p className="break-words font-sans text-sm text-zinc-400 sm:text-base md:text-lg">
                   {selectedProject.description}
                 </p>
                 {selectedProject.techStack && selectedProject.techStack.length > 0 && (
                   <div className="space-y-2">
-                    <h3 className="font-sans text-lg font-semibold text-zinc-300">Tech Stack</h3>
+                    <h3 className="font-sans text-base font-semibold text-zinc-300 sm:text-lg">Tech Stack</h3>
                     <div className="flex flex-wrap gap-2">
                       {selectedProject.techStack.map((tech) => (
                         <span
                           key={tech}
-                          className="rounded-md border border-white/20 bg-white/5 px-3 py-1.5 font-sans text-sm text-zinc-400"
+                          className="rounded-md border border-white/20 bg-white/5 px-2.5 py-1 font-sans text-xs text-zinc-400 sm:px-3 sm:py-1.5 sm:text-sm"
                         >
                           {tech}
                         </span>
@@ -194,22 +194,22 @@ export default function ProjectsPage() {
                   </div>
                 )}
                 {selectedProject.internal && (
-                  <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 px-4 py-3">
-                    <p className="font-sans text-sm text-zinc-400">
+                  <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 px-3 py-2.5 sm:px-4 sm:py-3">
+                    <p className="break-words font-sans text-xs text-zinc-400 sm:text-sm">
                       <span className="font-semibold text-amber-200/90">Internal project.</span> This project is private. No source code, demos, or links are available for external access. For inquiries regarding this project, contact:
                     </p>
-                    <ul className="mt-2 list-inside list-disc space-y-1 font-sans text-sm text-zinc-400">
+                    <ul className="mt-2 list-inside list-disc space-y-1 break-words font-sans text-xs text-zinc-400 sm:text-sm">
                       <li>Roberto Sanchez | AI Automation Developer — (208) 576-8451</li>
                       <li>Ron Vallejo | AI Solution Architect at Brigham Young University–Idaho — (208) 496-9002</li>
                     </ul>
                   </div>
                 )}
                 {selectedProject.showContactInfo && !selectedProject.internal && (
-                  <div className="rounded-lg border border-white/20 bg-white/5 px-4 py-3">
-                    <p className="font-sans text-sm text-zinc-400">
+                  <div className="rounded-lg border border-white/20 bg-white/5 px-3 py-2.5 sm:px-4 sm:py-3">
+                    <p className="break-words font-sans text-xs text-zinc-400 sm:text-sm">
                       For inquiries regarding this project, contact:
                     </p>
-                    <ul className="mt-2 list-inside list-disc space-y-1 font-sans text-sm text-zinc-400">
+                    <ul className="mt-2 list-inside list-disc space-y-1 break-words font-sans text-xs text-zinc-400 sm:text-sm">
                       <li>Roberto Sanchez | AI Automation Developer — (208) 576-8451</li>
                       <li>Ron Vallejo | AI Solution Architect at Brigham Young University–Idaho — (208) 496-9002</li>
                     </ul>
@@ -220,7 +220,7 @@ export default function ProjectsPage() {
                     href={selectedProject.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 font-sans text-sm font-medium text-zinc-300 underline decoration-zinc-500 underline-offset-2 transition-colors hover:text-zinc-200 hover:decoration-zinc-400"
+                    className="inline-flex items-center gap-2 break-words font-sans text-xs font-medium text-zinc-300 underline decoration-zinc-500 underline-offset-2 transition-colors hover:text-zinc-200 hover:decoration-zinc-400 sm:text-sm"
                   >
                     Open project
                     <ExternalLink size={16} />
