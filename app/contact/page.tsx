@@ -13,7 +13,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Copy } from "lucide-react";
+import { Copy, CheckCircle2 } from "lucide-react";
+import { Loader } from "@/components/ui/loader";
 import { cn } from "@/lib/utils";
 
 function AutoResizeTextarea({
@@ -128,11 +129,26 @@ export default function ContactPage() {
           </CardHeader>
           <CardContent>
             {state.succeeded ? (
-              <p className="font-sans text-center text-lg text-zinc-300">
-                Thanks for your message! I&apos;ll get back to you soon.
-              </p>
+              <div className="flex flex-col items-center gap-4 rounded-lg border border-green-500/30 bg-green-500/5 px-6 py-8 text-center">
+                <CheckCircle2 className="size-12 text-green-400" aria-hidden />
+                <div className="space-y-2">
+                  <p className="font-sans text-lg font-semibold text-green-300">
+                    Message successfully delivered
+                  </p>
+                  <p className="font-sans text-base text-zinc-400">
+                    Thanks for reaching out! I&apos;ll get back to you soon.
+                  </p>
+                </div>
+              </div>
             ) : (
-              <form className="grid w-full gap-6" onSubmit={handleSubmit}>
+              <div className="relative">
+                {state.submitting && (
+                  <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 rounded-lg bg-zinc-950/80 backdrop-blur-sm">
+                    <Loader size="lg" />
+                    <p className="font-sans text-sm text-zinc-400">Sending your message...</p>
+                  </div>
+                )}
+                <form className="grid w-full gap-6" onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-2">
                   <Label htmlFor="fullName" className="text-zinc-300">
                     Full Name
@@ -196,6 +212,7 @@ export default function ContactPage() {
                   </Button>
                 </div>
               </form>
+              </div>
             )}
           </CardContent>
         </Card>
