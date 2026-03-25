@@ -28,7 +28,7 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 w-full max-w-[100dvw] px-3 pt-4 pb-2 sm:px-6 sm:pt-6 lg:px-8 lg:pt-6 [padding-top:max(1rem,env(safe-area-inset-top))]">
-      <div className="mx-auto flex w-full max-w-full min-w-0 items-center justify-between gap-2 overflow-hidden rounded-full border border-white/20 bg-white/5 px-3 py-2.5 backdrop-blur-xl sm:gap-4 sm:overflow-visible sm:px-6 sm:py-3 md:gap-8">
+      <div className="mx-auto flex w-full max-w-full min-w-0 items-center justify-between gap-4 overflow-hidden rounded-full border border-white/20 bg-white/5 px-4 py-2.5 backdrop-blur-xl sm:max-w-fit sm:gap-8 sm:px-6 sm:py-3 sm:overflow-visible">
         {/* Brand/Logo */}
         <Link href="/about" className="flex min-w-0 shrink-0 items-center gap-2 focus:outline-none">
           <div className="flex h-7 w-9 shrink-0 items-center justify-center rounded-lg bg-black sm:h-8 sm:w-10">
@@ -38,16 +38,16 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden shrink-0 items-center gap-8 md:flex">
           {navLinks.map(({ href, label, icon: Icon, external }) => (
             <Link
               key={href}
               href={href}
               target={external ? "_blank" : undefined}
               rel={external ? "noopener noreferrer" : undefined}
-              className="flex items-center gap-2 text-sm font-medium text-white/90 transition-colors hover:text-white"
+              className="flex shrink-0 items-center gap-2 whitespace-nowrap text-sm font-medium text-white/90 transition-colors hover:text-white"
             >
-              <Icon size={18} />
+              <Icon size={18} className="shrink-0" />
               <span>{label}</span>
             </Link>
           ))}
