@@ -229,13 +229,13 @@ export default function ProjectsPage() {
               </DialogHeader>
               <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-y-auto overflow-x-hidden p-3 sm:gap-6 sm:p-6">
                 {selectedProject.image && (
-                  <div className="relative mx-auto w-full min-w-0 max-w-4xl">
+                  <div className="relative mx-auto w-full min-w-0 max-w-5xl md:max-w-6xl">
                     {isPictureAsset(selectedProject) ? (
                       <div className="overflow-hidden rounded-lg">
                         <button
                           type="button"
                           onClick={() => setPicturePopoutOpen(true)}
-                          className="group relative flex h-[min(38vh,280px)] w-full min-w-0 cursor-pointer touch-manipulation items-center justify-center overflow-hidden border-0 bg-zinc-900/30 p-0 text-left transition-[box-shadow] hover:ring-2 hover:ring-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 md:h-[min(45vh,400px)]"
+                          className="group relative flex h-[min(46vh,360px)] w-full min-w-0 cursor-pointer touch-manipulation items-center justify-center overflow-hidden border-0 bg-zinc-900/30 p-0 text-left transition-[box-shadow] hover:ring-2 hover:ring-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 md:h-[min(54vh,520px)]"
                           aria-haspopup="dialog"
                           aria-label="Open larger image preview"
                         >
@@ -268,7 +268,7 @@ export default function ProjectsPage() {
                       </div>
                     ) : (
                       <div
-                        className={`relative flex h-[min(38vh,280px)] w-full min-w-0 items-center justify-center overflow-hidden rounded-lg md:h-[min(45vh,400px)] ${
+                        className={`relative flex h-[min(46vh,360px)] w-full min-w-0 items-center justify-center overflow-hidden rounded-lg md:h-[min(54vh,520px)] ${
                           selectedProject.useN8nSplitLogo
                             ? selectedProject.cardImageAreaClassName ??
                               "bg-transparent"
@@ -377,36 +377,27 @@ export default function ProjectsPage() {
             <DialogContent
               showCloseButton={false}
               overlayClassName="z-[100]"
-              className="z-[100] flex max-h-[90dvh] w-[calc(100dvw-1rem)] max-w-none flex-col gap-0 overflow-hidden border border-white/20 bg-zinc-950 p-0 shadow-2xl md:w-[min(96vw,1200px)]"
+              className="z-[100] flex max-h-[96dvh] w-[calc(100dvw-1rem)] max-w-none flex-col gap-0 overflow-hidden border border-white/20 bg-zinc-950 p-0 shadow-2xl md:h-[min(76dvh,800px)] md:max-h-[min(82dvh,860px)] md:w-[min(96vw,1800px)] md:max-w-[min(96vw,1800px)] md:flex-row md:items-stretch"
             >
-              <DialogHeader className="flex shrink-0 flex-row items-start justify-between gap-2 border-b border-white/20 px-3 py-3 sm:items-center sm:px-6">
-                <DialogTitle className="min-w-0 flex-1 break-words pr-1 font-sans text-sm font-medium leading-snug text-zinc-400 sm:text-base md:truncate md:leading-normal md:whitespace-nowrap">
+              <DialogClose
+                className="absolute right-[max(0.75rem,env(safe-area-inset-right))] top-[max(0.75rem,env(safe-area-inset-top))] z-50 rounded-md p-2 text-zinc-400 transition-colors hover:bg-white/10 hover:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-white/30"
+                aria-label="Close image preview"
+              >
+                <X className="size-5 sm:size-6" />
+              </DialogClose>
+              <DialogHeader className="flex shrink-0 flex-row items-start gap-3 border-b border-white/20 px-4 py-3 pr-14 pt-4 sm:items-center md:h-full md:w-52 md:max-w-[13rem] md:flex-col md:items-start md:justify-between md:gap-6 md:self-stretch md:border-b-0 md:border-r md:pr-4 md:py-5 lg:w-56 lg:max-w-[14rem]">
+                <DialogTitle className="min-w-0 flex-1 break-words text-left font-sans text-sm font-medium leading-snug text-zinc-400 sm:text-base md:flex-1 md:leading-normal">
                   {selectedProject.title}
                 </DialogTitle>
-                <DialogClose
-                  className="shrink-0 rounded p-2 text-zinc-400 transition-colors hover:bg-white/10 hover:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-white/30"
-                  aria-label="Close image preview"
-                >
-                  <X className="size-5 sm:size-6" />
-                </DialogClose>
               </DialogHeader>
-              <div className="max-h-[min(75dvh,860px)] min-h-0 overflow-auto p-3 sm:p-6">
-                <div className="relative flex w-full items-center justify-center">
+              <div className="relative flex min-h-0 flex-1 flex-col md:min-h-0 md:flex-1">
+                <div className="relative min-h-[min(48dvh,420px)] w-full flex-1 md:min-h-0">
                   <Image
                     src={selectedProject.image}
                     alt={selectedProject.title}
-                    width={
-                      typeof selectedProject.image === "string"
-                        ? 1200
-                        : selectedProject.image.width
-                    }
-                    height={
-                      typeof selectedProject.image === "string"
-                        ? 800
-                        : selectedProject.image.height
-                    }
-                    className={`h-auto w-full max-w-full object-contain ${selectedProject.imageClassName ?? ""}`}
-                    sizes="(max-width: 1200px) 96vw, 1200px"
+                    fill
+                    className={`object-contain object-center p-2 sm:p-3 md:p-4 ${selectedProject.imageClassName ?? ""}`}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1800px) 85vw, 1536px"
                   />
                 </div>
               </div>
