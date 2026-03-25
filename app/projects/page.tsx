@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { StaticImageData } from "next/image";
 import AboutPageLayout from "@/components/AboutPageLayout";
 import {
@@ -17,7 +17,7 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/components/ui/dialog";
-import { X, ExternalLink } from "lucide-react";
+import { X, ExternalLink, ZoomIn } from "lucide-react";
 
 import chatbotImage from "../assets/projects/chatbot.webp";
 import n8nImage from "../assets/projects/n8n.webp";
@@ -25,6 +25,7 @@ import fileTransferImage from "../assets/projects/file-transfer.webp";
 import worforceImage from "../assets/projects/worforce.webp";
 import rustSeeklogoImage from "../assets/projects/rust-seeklogo.webp";
 import repoSpyImage from "../assets/projects/repo-spy.webp";
+import { N8nLogoSplit } from "@/components/N8nLogoSplit";
 
 type Project = {
   title: string;
@@ -35,7 +36,19 @@ type Project = {
   internal?: boolean;
   imageClassName?: string;
   showContactInfo?: boolean;
+  /** Use "contain" for logos that should not be cropped (e.g. wide brand marks). */
+  cardImageFit?: "cover" | "contain";
+  /** SVG logo: white wordmark, colored symbol (e.g. n8n). */
+  useN8nSplitLogo?: boolean;
+  /** Override background for `cardImageFit: "contain"` strip (n8n split logo defaults to transparent). */
+  cardImageAreaClassName?: string;
+  /** Override inner logo box size for contain layout (Tailwind classes). */
+  cardLogoContainClassName?: string;
 };
+
+function isPictureAsset(p: Project): boolean {
+  return !!p.image && !p.useN8nSplitLogo && p.cardImageFit !== "contain";
+}
 
 const PLACEHOLDER_PROJECTS: Project[] = [
   {
@@ -47,12 +60,14 @@ const PLACEHOLDER_PROJECTS: Project[] = [
     showContactInfo: true,
   },
   {
-    title: "Internal Agent",
+    title: "BYUI IT Internal Agent",
     description: "An AI agent designed to search indexed knowledge base articles and assist analysts during customer interactions and troubleshooting. Integrated with a LlamaIndex RAG pipeline that indexes knowledge base articles to Pinecone for efficient retrieval. The project leverages a web interactive graphical interface with an n8n AI agent backend and LlamaIndex RAG pipeline for orchestration and agent handoff.",
     image: n8nImage,
     link: undefined,
     techStack: ["n8n", "Python", "LlamaIndex", "Pinecone", "GPT 5.1"],
     internal: true,
+    cardImageFit: "contain",
+    useN8nSplitLogo: true,
   },
   {
     title: "File Transfer Client-Server",
@@ -78,6 +93,9 @@ const PLACEHOLDER_PROJECTS: Project[] = [
     techStack: ["Rust", "reqwest", "scraper", "csv", "clap", "rand", "regex", "log", "env_logger"],
     internal: false,
     imageClassName: "brightness-0 invert",
+    cardImageFit: "contain",
+    cardImageAreaClassName: "bg-zinc-900/70",
+    cardLogoContainClassName: "h-9 w-24 sm:h-10 sm:w-28 md:h-11 md:w-32",
   },
   {
     title: "Repo-Spy",
@@ -91,10 +109,15 @@ const PLACEHOLDER_PROJECTS: Project[] = [
 
 export default function ProjectsPage() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [picturePopoutOpen, setPicturePopoutOpen] = useState(false);
+
+  useEffect(() => {
+    setPicturePopoutOpen(false);
+  }, [selectedProject?.title]);
 
   return (
     <AboutPageLayout>
-      <main className="flex min-h-dvh w-full flex-col items-center px-4 pt-28 pb-8 sm:px-6 sm:pt-32 md:px-8 md:pt-36 lg:px-12 lg:pt-40 [padding-bottom:max(2rem,env(safe-area-inset-bottom))]">
+      <main className="flex min-h-dvh w-full min-w-0 flex-col items-center px-3 pt-28 pb-8 sm:px-6 sm:pt-32 md:px-8 md:pt-36 lg:px-12 lg:pt-40 [padding-bottom:max(2rem,env(safe-area-inset-bottom))]">
         <div className="mx-auto w-full max-w-6xl">
           <h1 className="mb-10 font-sans text-2xl font-bold text-zinc-300 sm:mb-12 sm:text-3xl md:text-4xl">
             Projects
@@ -112,24 +135,63 @@ export default function ProjectsPage() {
                     setSelectedProject(project);
                   }
                 }}
-                className="cursor-pointer overflow-hidden border-white/20 bg-white/5 backdrop-blur-xl transition-colors hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
+                className="min-w-0 cursor-pointer touch-manipulation overflow-hidden border-white/20 bg-white/5 backdrop-blur-xl transition-colors hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
               >
                 {project.image && (
-                  <div className="relative aspect-video w-full overflow-hidden">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className={`object-cover ${project.imageClassName ?? ""}`}
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
+                  <div
+                    className={`relative aspect-video w-full overflow-hidden ${
+                      project.cardImageFit === "contain"
+                        ? project.cardImageAreaClassName ??
+                          (project.useN8nSplitLogo
+                            ? "bg-transparent"
+                            : "bg-gradient-to-br from-violet-950/70 via-purple-950/50 to-violet-900/40")
+                        : ""
+                    }`}
+                  >
+                    {project.useN8nSplitLogo ? (
+                      <div className="absolute inset-0 flex items-center justify-center p-4">
+                        <div
+                          className={`relative ${
+                            project.cardLogoContainClassName ??
+                            "h-12 w-32 sm:h-14 sm:w-36 md:h-16 md:w-40"
+                          }`}
+                        >
+                          <N8nLogoSplit />
+                        </div>
+                      </div>
+                    ) : project.cardImageFit === "contain" ? (
+                      <div className="absolute inset-0 flex items-center justify-center p-4">
+                        <div
+                          className={`relative ${
+                            project.cardLogoContainClassName ??
+                            "h-12 w-32 sm:h-14 sm:w-36 md:h-16 md:w-40"
+                          }`}
+                        >
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            className={`object-contain ${project.imageClassName ?? ""}`}
+                            sizes="(max-width: 640px) 160px, 200px"
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className={`object-cover ${project.imageClassName ?? ""}`}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    )}
                   </div>
                 )}
-                <CardHeader>
-                  <CardTitle className="font-sans text-lg font-semibold text-zinc-300 sm:text-xl">
+                <CardHeader className="min-w-0">
+                  <CardTitle className="break-words font-sans text-lg font-semibold text-zinc-300 sm:text-xl">
                     {project.title}
                   </CardTitle>
-                  <CardDescription className="text-zinc-400">
+                  <CardDescription className="min-w-0 break-words text-zinc-400">
                     {project.description}
                   </CardDescription>
                 </CardHeader>
@@ -141,16 +203,21 @@ export default function ProjectsPage() {
 
       <Dialog
         open={!!selectedProject}
-        onOpenChange={(open) => !open && setSelectedProject(null)}
+        onOpenChange={(open) => {
+          if (!open) {
+            setSelectedProject(null);
+            setPicturePopoutOpen(false);
+          }
+        }}
       >
         <DialogContent
           showCloseButton={false}
-          className="inset-0 flex h-dvh max-h-dvh w-dvh max-w-none translate-x-0 translate-y-0 flex-col overflow-hidden rounded-none border-0 bg-zinc-950 p-0 data-[state=open]:!animate-slide-in-from-left data-[state=closed]:!animate-slide-out-to-left [padding-left:env(safe-area-inset-left)] [padding-right:env(safe-area-inset-right)] [padding-bottom:env(safe-area-inset-bottom)]"
+          className="inset-0 flex h-dvh max-h-dvh w-full min-w-0 max-w-[100dvw] translate-x-0 translate-y-0 flex-col overflow-hidden rounded-none border-0 bg-zinc-950 p-0 data-[state=open]:!animate-slide-in-from-left data-[state=closed]:!animate-slide-out-to-left [padding-left:env(safe-area-inset-left)] [padding-right:env(safe-area-inset-right)] [padding-bottom:env(safe-area-inset-bottom)]"
         >
           {selectedProject && (
             <div className="flex h-full max-h-dvh w-full min-w-0 flex-col overflow-hidden">
-              <DialogHeader className="flex shrink-0 flex-row items-center justify-between gap-3 border-b border-white/20 px-4 py-3 sm:gap-4 sm:px-6 sm:py-4">
-                <DialogTitle className="min-w-0 flex-1 truncate font-sans text-lg font-semibold text-zinc-300 sm:text-xl md:text-2xl">
+              <DialogHeader className="flex shrink-0 flex-row items-start justify-between gap-2 border-b border-white/20 px-3 py-3 sm:items-center sm:gap-4 sm:px-6 sm:py-4">
+                <DialogTitle className="min-w-0 flex-1 break-words font-sans text-lg font-semibold leading-snug text-zinc-300 sm:text-xl md:truncate md:text-2xl md:leading-normal md:whitespace-nowrap">
                   {selectedProject.title}
                 </DialogTitle>
                 <DialogClose
@@ -160,19 +227,90 @@ export default function ProjectsPage() {
                   <X className="size-5 sm:size-6" />
                 </DialogClose>
               </DialogHeader>
-              <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-y-auto overflow-x-hidden p-4 sm:gap-6 sm:p-6">
+              <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 overflow-y-auto overflow-x-hidden p-3 sm:gap-6 sm:p-6">
                 {selectedProject.image && (
                   <div className="relative mx-auto w-full min-w-0 max-w-4xl">
-                    <div className="relative flex h-[min(45vh,400px)] w-full items-center justify-center overflow-hidden rounded-lg bg-zinc-900/30">
-                      <Image
-                        src={selectedProject.image}
-                        alt={selectedProject.title}
-                        width={typeof selectedProject.image === "string" ? 444 : selectedProject.image.width}
-                        height={typeof selectedProject.image === "string" ? 120 : selectedProject.image.height}
-                        className={`max-h-full w-auto max-w-full object-contain ${selectedProject.imageClassName ?? ""}`}
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 896px"
-                      />
-                    </div>
+                    {isPictureAsset(selectedProject) ? (
+                      <div className="overflow-hidden rounded-lg">
+                        <button
+                          type="button"
+                          onClick={() => setPicturePopoutOpen(true)}
+                          className="group relative flex h-[min(38vh,280px)] w-full min-w-0 cursor-pointer touch-manipulation items-center justify-center overflow-hidden border-0 bg-zinc-900/30 p-0 text-left transition-[box-shadow] hover:ring-2 hover:ring-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 md:h-[min(45vh,400px)]"
+                          aria-haspopup="dialog"
+                          aria-label="Open larger image preview"
+                        >
+                          <Image
+                            src={selectedProject.image}
+                            alt={selectedProject.title}
+                            width={
+                              typeof selectedProject.image === "string"
+                                ? 444
+                                : selectedProject.image.width
+                            }
+                            height={
+                              typeof selectedProject.image === "string"
+                                ? 120
+                                : selectedProject.image.height
+                            }
+                            className={`max-h-full w-auto max-w-full object-contain ${selectedProject.imageClassName ?? ""}`}
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 896px"
+                          />
+                          <span
+                            className="pointer-events-none absolute inset-0 flex items-center justify-center bg-zinc-950/0 transition-colors duration-200 group-hover:bg-zinc-950/40 group-focus-visible:bg-zinc-950/40"
+                            aria-hidden
+                          >
+                            <ZoomIn
+                              className="size-9 text-zinc-100 opacity-0 drop-shadow-md transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100 sm:size-10"
+                              strokeWidth={1.75}
+                            />
+                          </span>
+                        </button>
+                      </div>
+                    ) : (
+                      <div
+                        className={`relative flex h-[min(38vh,280px)] w-full min-w-0 items-center justify-center overflow-hidden rounded-lg md:h-[min(45vh,400px)] ${
+                          selectedProject.useN8nSplitLogo
+                            ? selectedProject.cardImageAreaClassName ??
+                              "bg-transparent"
+                            : selectedProject.cardImageAreaClassName
+                              ? selectedProject.cardImageAreaClassName
+                              : "bg-zinc-900/30"
+                        }`}
+                      >
+                        {selectedProject.useN8nSplitLogo ? (
+                          <div className="h-24 w-72 max-w-[90%] sm:h-28 sm:w-80 md:h-32 md:w-96">
+                            <N8nLogoSplit />
+                          </div>
+                        ) : selectedProject.cardLogoContainClassName ? (
+                          <div className="relative h-20 w-52 max-w-[85%] sm:h-24 sm:w-64 md:h-28 md:w-72">
+                            <Image
+                              src={selectedProject.image}
+                              alt={selectedProject.title}
+                              fill
+                              className={`object-contain ${selectedProject.imageClassName ?? ""}`}
+                              sizes="(max-width: 640px) 240px, 320px"
+                            />
+                          </div>
+                        ) : (
+                          <Image
+                            src={selectedProject.image}
+                            alt={selectedProject.title}
+                            width={
+                              typeof selectedProject.image === "string"
+                                ? 444
+                                : selectedProject.image.width
+                            }
+                            height={
+                              typeof selectedProject.image === "string"
+                                ? 120
+                                : selectedProject.image.height
+                            }
+                            className={`max-h-full w-auto max-w-full object-contain ${selectedProject.imageClassName ?? ""}`}
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 896px"
+                          />
+                        )}
+                      </div>
+                    )}
                   </div>
                 )}
                 <p className="break-words font-sans text-sm text-zinc-400 sm:text-base md:text-lg">
@@ -231,6 +369,50 @@ export default function ProjectsPage() {
           )}
         </DialogContent>
       </Dialog>
+
+      {selectedProject &&
+        selectedProject.image &&
+        isPictureAsset(selectedProject) && (
+          <Dialog open={picturePopoutOpen} onOpenChange={setPicturePopoutOpen}>
+            <DialogContent
+              showCloseButton={false}
+              overlayClassName="z-[100]"
+              className="z-[100] flex max-h-[90dvh] w-[calc(100dvw-1rem)] max-w-none flex-col gap-0 overflow-hidden border border-white/20 bg-zinc-950 p-0 shadow-2xl md:w-[min(96vw,1200px)]"
+            >
+              <DialogHeader className="flex shrink-0 flex-row items-start justify-between gap-2 border-b border-white/20 px-3 py-3 sm:items-center sm:px-6">
+                <DialogTitle className="min-w-0 flex-1 break-words pr-1 font-sans text-sm font-medium leading-snug text-zinc-400 sm:text-base md:truncate md:leading-normal md:whitespace-nowrap">
+                  {selectedProject.title}
+                </DialogTitle>
+                <DialogClose
+                  className="shrink-0 rounded p-2 text-zinc-400 transition-colors hover:bg-white/10 hover:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-white/30"
+                  aria-label="Close image preview"
+                >
+                  <X className="size-5 sm:size-6" />
+                </DialogClose>
+              </DialogHeader>
+              <div className="max-h-[min(75dvh,860px)] min-h-0 overflow-auto p-3 sm:p-6">
+                <div className="relative flex w-full items-center justify-center">
+                  <Image
+                    src={selectedProject.image}
+                    alt={selectedProject.title}
+                    width={
+                      typeof selectedProject.image === "string"
+                        ? 1200
+                        : selectedProject.image.width
+                    }
+                    height={
+                      typeof selectedProject.image === "string"
+                        ? 800
+                        : selectedProject.image.height
+                    }
+                    className={`h-auto w-full max-w-full object-contain ${selectedProject.imageClassName ?? ""}`}
+                    sizes="(max-width: 1200px) 96vw, 1200px"
+                  />
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+        )}
     </AboutPageLayout>
   );
 }

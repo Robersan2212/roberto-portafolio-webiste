@@ -13,8 +13,8 @@ const BIO_TEXT =
 export default function AboutPage() {
   return (
     <AboutPageLayout>
-      <main className="flex min-h-dvh w-full flex-col items-center justify-center px-4 pt-28 pb-8 sm:px-6 sm:pt-32 md:px-8 md:pt-36 lg:px-12 lg:pt-40 [padding-bottom:max(2rem,env(safe-area-inset-bottom))]">
-        <div className="mr-auto flex w-full max-w-6xl flex-col items-start justify-center gap-8 lg:mx-auto lg:translate-x-2 lg:flex-row lg:items-center lg:justify-center lg:gap-12">
+      <main className="flex min-h-dvh w-full min-w-0 flex-col items-center justify-center px-3 pt-28 pb-8 sm:px-6 sm:pt-32 md:px-8 md:pt-36 lg:px-12 lg:pt-40 [padding-bottom:max(2rem,env(safe-area-inset-bottom))]">
+        <div className="mr-auto flex w-full min-w-0 max-w-6xl flex-col items-start justify-center gap-8 lg:mx-auto lg:translate-x-2 lg:flex-row lg:items-center lg:justify-center lg:gap-12">
           {/* Portrait - 3rd in sequence */}
           <div className="shrink-0 aspect-[3/4] w-48 sm:w-56 md:w-64 lg:w-72 xl:w-80 2xl:w-96">
             <FadeContent delay={600} duration={600} initialOpacity={0}>
@@ -29,8 +29,8 @@ export default function AboutPage() {
           </div>
 
           {/* Bio text - next to picture, centered */}
-          <div className="flex flex-1 flex-col justify-center">
-            <div className="max-w-2xl space-y-6 text-left">
+          <div className="flex min-w-0 flex-1 flex-col justify-center">
+            <div className="max-w-2xl min-w-0 space-y-6 text-left">
               <TextType
                 text="About Me"
                 as="h1"
@@ -48,7 +48,7 @@ export default function AboutPage() {
                 typingSpeed={5}
                 initialDelay={300}
                 cursorClassName="text-zinc-400"
-                className="block w-full font-sans text-lg leading-relaxed text-left text-zinc-400 sm:text-xl md:text-2xl"
+                className="block w-full min-w-0 break-words font-sans text-lg leading-relaxed text-left text-zinc-400 sm:text-xl md:text-2xl"
               />
               <FadeContent delay={900} duration={600} initialOpacity={0} className="flex flex-col gap-6">
               <div className="space-y-2">
@@ -56,7 +56,7 @@ export default function AboutPage() {
                   Tech Stack
                 </h2>
                 <p className="font-sans text-base text-zinc-400 sm:text-lg">
-                  React, Next.js, Tailwind CSS, TypeScript, Postgres, MySQL, Python, FastAPI, OpenAI SDK, OpenAI API,  LangChain, n8n, Docker, AWS, Linux
+                  React, Next.js, Tailwind CSS, TypeScript, Postgres, MySQL, Python, FastAPI, OpenAI SDK, OpenAI API, LangChain, n8n, Docker, AWS, Linux
                 </p>
               </div>
               <div className="space-y-2">

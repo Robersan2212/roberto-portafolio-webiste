@@ -181,11 +181,22 @@
     @apply border-border outline-ring/50;
   }
   html {
-    overflow-x: hidden;
+    overflow-x: clip;
+    max-width: 100%;
+    overscroll-behavior-x: none;
   }
   body {
     @apply bg-background text-foreground;
-    overflow-x: hidden;
+    overflow-x: clip;
+    max-width: 100%;
     min-height: 100dvh;
+    overscroll-behavior-x: none;
+  }
+  /*
+   * Radix Dialog uses react-remove-scroll: body gets margin/padding for scrollbar width.
+   * Fixed full-width elements (e.g. nav) must use the same offset or the page looks like it shifts.
+   */
+  body[data-scroll-locked] nav.fixed {
+    right: var(--removed-body-scroll-bar-size, 0px);
   }
 }

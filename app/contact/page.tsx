@@ -97,8 +97,8 @@ export default function ContactPage() {
 
   return (
     <AboutPageLayout>
-      <main className="flex min-h-dvh w-full flex-col items-center justify-center px-4 pt-28 pb-8 sm:px-6 sm:pt-32 md:px-8 md:pt-36 lg:px-12 lg:pt-40 [padding-bottom:max(2rem,env(safe-area-inset-bottom))]">
-        <Card className="w-full max-w-md border-white/20 bg-white/5 backdrop-blur-xl">
+      <main className="flex min-h-dvh w-full min-w-0 flex-col items-center justify-center px-3 pt-28 pb-8 sm:px-6 sm:pt-32 md:px-8 md:pt-36 lg:px-12 lg:pt-40 [padding-bottom:max(2rem,env(safe-area-inset-bottom))]">
+        <Card className="w-full min-w-0 max-w-md border-white/20 bg-white/5 backdrop-blur-xl">
           <CardHeader>
             <CardTitle className="font-sans text-2xl font-bold text-zinc-300">
               Contact Me
@@ -106,8 +106,8 @@ export default function ContactPage() {
             <CardDescription className="text-zinc-400">
               Send me a message and I&apos;ll get back to you.
             </CardDescription>
-            <div className="flex items-center gap-2 text-sm text-zinc-400">
-              <span>Email: {EMAIL}</span>
+            <div className="flex flex-col gap-2 text-sm text-zinc-400 sm:flex-row sm:flex-wrap sm:items-center sm:gap-2">
+              <span className="min-w-0 break-all sm:break-normal">Email: {EMAIL}</span>
               <button
                 type="button"
                 onClick={handleCopyEmail}

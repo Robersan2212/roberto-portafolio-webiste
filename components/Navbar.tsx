@@ -27,8 +27,8 @@ export default function Navbar() {
       ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 w-full px-3 pt-4 pb-2 sm:px-6 sm:pt-6 lg:px-8 lg:pt-6 [padding-top:max(1rem,env(safe-area-inset-top))]">
-      <div className="mx-auto flex w-full max-w-full min-w-0 items-center justify-between gap-4 overflow-hidden rounded-full border border-white/20 bg-white/5 px-4 py-2.5 backdrop-blur-xl sm:max-w-fit sm:gap-8 sm:px-6 sm:py-3 sm:overflow-visible">
+    <nav className="fixed top-0 left-0 right-0 z-50 w-full max-w-[100dvw] px-3 pt-4 pb-2 sm:px-6 sm:pt-6 lg:px-8 lg:pt-6 [padding-top:max(1rem,env(safe-area-inset-top))]">
+      <div className="mx-auto flex w-full max-w-full min-w-0 items-center justify-between gap-2 overflow-hidden rounded-full border border-white/20 bg-white/5 px-3 py-2.5 backdrop-blur-xl sm:gap-4 sm:overflow-visible sm:px-6 sm:py-3 md:gap-8">
         {/* Brand/Logo */}
         <Link href="/about" className="flex min-w-0 shrink-0 items-center gap-2 focus:outline-none">
           <div className="flex h-7 w-9 shrink-0 items-center justify-center rounded-lg bg-black sm:h-8 sm:w-10">
@@ -70,13 +70,13 @@ export default function Navbar() {
 
       {/* Mobile Navigation */}
       <div
-        className={`relative z-50 mx-4 mt-3 rounded-3xl border border-white/20 bg-white/5 backdrop-blur-xl transition-all duration-200 ease-out md:hidden sm:mx-6 md:mx-8 lg:mx-12 ${
+        className={`relative z-50 mx-3 mt-3 rounded-3xl border border-white/20 bg-white/5 backdrop-blur-xl transition-all duration-200 ease-out sm:mx-6 md:hidden ${
           isOpen
-            ? "max-h-60 opacity-100 visible translate-y-0"
-            : "max-h-0 opacity-0 invisible -translate-y-2 border-transparent"
+            ? "max-h-[min(70vh,22rem)] overflow-y-auto overscroll-contain opacity-100 visible translate-y-0"
+            : "max-h-0 overflow-hidden opacity-0 invisible -translate-y-2 border-transparent"
         }`}
       >
-        <div className="flex flex-col gap-4 px-6 py-4">
+        <div className="flex flex-col gap-4 px-5 py-4 sm:px-6">
           {navLinks.map(({ href, label, icon: Icon, external }) => (
             <Link
               key={href}
